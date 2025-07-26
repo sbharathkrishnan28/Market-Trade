@@ -1,0 +1,55 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0a0f1c;
+  color: #e0eaff;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: linear-gradient(to right, #00f0ff, #7d00ff);
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 15px #00f0ff;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.activity-log {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 30px;
+}
+
+.activity-card {
+  background-color: #1a2238;
+  border: 1px solid #00f0ff;
+  border-radius: 10px;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px #7d00ff;
+}
+
+.activity-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00f0ff;
+}
+
+h3 {
+  margin-top: 0;
+  color: #00f0ff;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #131826;
+  color: #ccc;
+  font-size: 0.9em;
+  border-top: 1px solid #333;
+}
