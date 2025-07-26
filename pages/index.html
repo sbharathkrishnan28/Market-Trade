@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MarkTrade - AI Marketing & Stock Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .dark {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    button {
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    input {
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 0.375rem;
+    }
+    .custom-shadow { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .container {
+      max-width: 640px;
+      margin: auto;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-white">
+  <div id="root" class="min-h-screen flex items-center justify-center"></div>
+
+  <script type="module">
+    function App() {
+      const container = document.createElement('div');
+      container.className = 'container bg-white rounded shadow p-6';
+      container.innerHTML = `
+        <h2 class="text-2xl font-bold mb-4">📊 MarkTrade Dashboard</h2>
+        <p class="text-sm text-gray-600 mb-4">Real-time insights into marketing and stock performance.</p>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-blue-100 p-4 rounded">📈 Stocks: +5%</div>
+          <div class="bg-green-100 p-4 rounded">💰 ROI: 18%</div>
+          <div class="bg-yellow-100 p-4 rounded">📣 Click-Through Rate: 12%</div>
+          <div class="bg-red-100 p-4 rounded">🤖 AI Assistant: Ready</div>
+        </div>
+      `;
+      return container;
+    }
+
+    function LoginPage(onLoginSuccess) {
+      const container = document.createElement('div');
+      container.className = 'container bg-white rounded shadow p-6';
+      container.innerHTML = `
+        <h2 class="text-xl font-semibold mb-4 text-center">Login to MarkTrade</h2>
+        <input type="text" id="username" placeholder="Username" class="mb-2" />
+        <input type="password" id="password" placeholder="Password" class="mb-2" />
+        <button id="loginBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded">Login</button>
+        <p class="text-sm text-center mt-4">Don't have an account? <a href="#" id="gotoSignup" class="text-blue-600">Sign up</a></p>
+      `;
+
+      container.querySelector('#loginBtn').onclick = () => {
+        const username = container.querySelector('#username').value;
+        const password = container.querySelector('#password').value;
+        if (username && password) {
+          localStorage.setItem("user", username);
+          onLoginSuccess();
+        } else {
+          alert("Please fill in both fields.");
+        }
+      };
+
+      return container;
+    }
+
+    function SignupPage(onSignupSuccess) {
+      const container = document.createElement('div');
+      container.className = 'container bg-white rounded shadow p-6';
+      container.innerHTML = `
+        <h2 class="text-xl font-semibold mb-4 text-center">Create your account</h2>
+        <input type="text" id="newUsername" placeholder="Username" class="mb-2" />
+        <input type="password" id="newPassword" placeholder="Password" class="mb-2" />
+        <button id="signupBtn" class="w-full bg-blue-600 text-white px-4 py-2 rounded">Sign up</button>
+        <p class="text-sm text-center mt-4">Already registered? <a href="#" id="gotoLogin" class="text-blue-600">Login</a></p>
+      `;
+
+      container.querySelector('#signupBtn').onclick = () => {
+        const username = container.querySelector('#newUsername').value;
+        const password = container.querySelector('#newPassword').value;
+        if (username && password) {
+          localStorage.setItem("user", username);
+          onSignupSuccess();
+        } else {
+          alert("Please complete all fields.");
+        }
+      };
+
+      return container;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.getElementById("root");
+
+      function showApp() {
+        root.innerHTML = "";
+        const app = App();
+        const logoutBtn = document.createElement("button");
+        logoutBtn.innerText = "Logout";
+        logoutBtn.className = "fixed top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded shadow";
+        logoutBtn.onclick = () => {
+          localStorage.removeItem("user");
+          showLogin();
+        };
+        root.appendChild(logoutBtn);
+        root.appendChild(app);
+      }
+
+      function showLogin() {
+        root.innerHTML = "";
+        const login = LoginPage(showApp);
+        login.querySelector("#gotoSignup")?.addEventListener("click", showSignup);
+        root.appendChild(login);
+      }
+
+      function showSignup() {
+        root.innerHTML = "";
+        const signup = SignupPage(showApp);
+        signup.querySelector("#gotoLogin")?.addEventListener("click", showLogin);
+        root.appendChild(signup);
+      }
+
+      const user = localStorage.getItem("user");
+      user ? showApp() : showLogin();
+    });
+  </script>
+</body>
+</html>
